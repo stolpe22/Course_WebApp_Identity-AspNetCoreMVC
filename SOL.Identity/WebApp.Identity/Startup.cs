@@ -33,7 +33,7 @@ namespace WebApp.Identity
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddIdentityCore<User>(options => { });
+            services.AddIdentityCore<MyUser>(options => { });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
