@@ -9,7 +9,6 @@ using WebApp.Identity.Models;
 
 namespace WebApp.Identity.Controllers
 {
-    [ApiController]
     public class HomeController : Controller
     {
         private readonly UserManager<MyUser> _userManager;
@@ -29,6 +28,7 @@ namespace WebApp.Identity.Controllers
             return View();
         }
 
+        [HttpPost]
         public async Task<IActionResult> Register(RegisterModel model)
         {
             if (ModelState.IsValid)
@@ -51,7 +51,13 @@ namespace WebApp.Identity.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [HttpGet]
+        public async Task<IActionResult> Register()
+        {
+            return View();
+        }
+
+            [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

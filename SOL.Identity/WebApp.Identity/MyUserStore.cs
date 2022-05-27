@@ -77,7 +77,7 @@ namespace WebApp.Identity
             {
                 return await connection.QueryFirstOrDefaultAsync<MyUser>(
                     "select * from Users where normalizedUserName = @name",
-                    new { nome = normalizedUserName });
+                    new { name = normalizedUserName });
             }
         }
 
