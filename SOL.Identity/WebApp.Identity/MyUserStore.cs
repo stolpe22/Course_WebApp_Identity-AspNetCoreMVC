@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace WebApp.Identity
 {
-    public class MyUserStore : IUserStore<MyUser>
+    public class MyUserStore : IUserStore<MyUser>, IUserPasswordStore<MyUser>
     {
         public async Task<IdentityResult> CreateAsync(MyUser user, CancellationToken cancellationToken)
         {
@@ -63,7 +63,7 @@ namespace WebApp.Identity
 
         public async Task<MyUser> FindByIdAsync(string userId, CancellationToken cancellationToken)
         {
-            using(var connection = GetOpenConnection())
+            using (var connection = GetOpenConnection())
             {
                 return await connection.QueryFirstOrDefaultAsync<MyUser>(
                     "select * from Users where id = @id",
@@ -130,6 +130,22 @@ namespace WebApp.Identity
             }
 
             return IdentityResult.Success;
+        }
+
+        public Task SetPasswordHashAsync(MyUser user, string passwordHash, CancellationToken cancellationToken)
+        {
+            user.PasswordHash = passwordHash;
+            return Task.CompletedTask;
+        }
+
+        public Task<string> GetPasswordHashAsync(MyUser user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.PasswordHash);
+        }
+
+        public Task<bool> HasPasswordAsync(MyUser user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.PasswordHash != null);
         }
     }
 }
