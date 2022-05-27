@@ -8,6 +8,7 @@ using WebApp.Identity.Models;
 
 namespace WebApp.Identity.Controllers
 {
+    [ApiController]
     public class HomeController : Controller
     {
         public IActionResult Index()
@@ -17,6 +18,15 @@ namespace WebApp.Identity.Controllers
 
         public IActionResult Privacy()
         {
+            return View();
+        }
+
+        public async Task<IActionResult> Register(RegisterModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                return View("Success");
+            }
             return View();
         }
 
